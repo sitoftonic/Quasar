@@ -1,14 +1,25 @@
 <template>
   <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-full.svg"
-    >
+    <p>
+      {{ text }}
+    </p>
   </q-page>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  name: 'PageIndex'
+  name: 'PageIndex',
+  data: function () {
+    return {
+      text: ''
+    }
+  },
+  mounted: function () {
+    axios
+      .get('https://pokeapi.co/api/v2/pokemon/ditto')
+      .then(res => (this.text = res))
+  }
 }
 </script>

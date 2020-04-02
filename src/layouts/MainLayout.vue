@@ -30,7 +30,7 @@
           header
           class="text-grey-8"
         >
-          Essential Links
+          Bienvenido, {{ username }}
         </q-item-label>
         <EssentialLink
           v-for="link in essentialLinks"
@@ -47,7 +47,9 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink'
+import EssentialLink from 'components/SidebarMenuLinks'
+
+var username = 'Luis'
 
 export default {
   name: 'MainLayout',
@@ -59,42 +61,49 @@ export default {
   data () {
     return {
       leftDrawerOpen: false,
+      username,
       essentialLinks: [
         {
-          title: 'Docs',
-          caption: 'quasar.dev',
-          icon: 'school',
-          link: 'https://quasar.dev'
+          title: 'Dashboard',
+          caption: 'Página principal',
+          icon: 'home',
+          link: '/'
         },
         {
-          title: 'Github',
-          caption: 'github.com/quasarframework',
-          icon: 'code',
-          link: 'https://github.com/quasarframework'
+          title: 'Buscador',
+          caption: 'Nuevas campañas',
+          icon: 'search',
+          link: '/search/campaigns'
         },
         {
-          title: 'Discord Chat Channel',
-          caption: 'chat.quasar.dev',
+          title: 'Mis campañas',
+          caption: 'Administración',
           icon: 'chat',
-          link: 'https://chat.quasar.dev'
+          link: '/my/campaigns'
         },
         {
-          title: 'Forum',
-          caption: 'forum.quasar.dev',
+          title: 'Mensajes',
+          caption: 'Bandeja de entrada',
           icon: 'record_voice_over',
-          link: 'https://forum.quasar.dev'
+          link: '/my/messages'
         },
         {
-          title: 'Twitter',
-          caption: '@quasarframework',
+          title: 'Afiliados',
+          caption: 'Gestiona tu red',
           icon: 'rss_feed',
-          link: 'https://twitter.quasar.dev'
+          link: '/my/affiliates'
         },
         {
-          title: 'Facebook',
-          caption: '@QuasarFramework',
+          title: 'Centro de Datos',
+          caption: 'Analiza tu impacto',
           icon: 'public',
-          link: 'https://facebook.quasar.dev'
+          link: '/my/analytics'
+        },
+        {
+          title: 'Configuración',
+          caption: 'Ajustes de Usuario',
+          icon: 'settings',
+          link: '/my/settings'
         }
       ]
     }
