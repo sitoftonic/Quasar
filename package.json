@@ -16,11 +16,13 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
+    "crypto-js": "^4.0.0",
     "quasar": "^1.0.0",
+    "secure-web-storage": "^1.0.2",
     "vue-i18n": "^8.0.0"
   },
   "devDependencies": {
-    "@quasar/app": "^1.0.0",
+    "@quasar/app": "^1.6.1",
     "babel-eslint": "^10.0.1",
     "devtron": "^1.4.0",
     "electron": "^8.2.0",

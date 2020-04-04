@@ -4,10 +4,26 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
-      { path: 'profile', component: () => import('pages/Profile.vue') },
-      { path: '*', component: () => import('pages/Error404.vue') }
+      {
+        path: '',
+        name: 'dashboard',
+        component: () => import('pages/Dashboard.vue'),
+      },
+      {
+        path: 'profile',
+        name: 'profile',
+        component: () => import('pages/Profile.vue'),
+      },
     ]
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('pages/Login.vue')
+  },
+  {
+    path: '*',
+    redirect: 'login'
   }
 ]
 

@@ -10,13 +10,13 @@
 import axios from 'axios'
 
 export default {
-  name: 'PageIndex',
-  data: function () {
+  name: 'DashboardPage',
+  data () {
     return {
       text: ''
     }
   },
-  mounted: function () {
+  mounted () {
     axios
       .get('https://pokeapi.co/api/v2/pokemon/ditto')
       .then(res => (this.text = res))

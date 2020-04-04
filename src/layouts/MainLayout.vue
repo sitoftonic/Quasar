@@ -14,8 +14,7 @@
         <q-toolbar-title>
           Influentia
         </q-toolbar-title>
-
-        <div>v0.1</div>
+        <DropdownMenu></DropdownMenu>
       </q-toolbar>
     </q-header>
 
@@ -39,8 +38,8 @@
         />
       </q-list>
     </q-drawer>
-
     <q-page-container>
+      <OfflineBanner v-if="isOffline"></OfflineBanner>
       <router-view />
     </q-page-container>
   </q-layout>
@@ -48,20 +47,31 @@
 
 <script>
 import EssentialLink from 'components/SidebarMenuLinks'
+import secureStorage from '../configs/secureStorage'
+import OfflineBanner from '../components/OfflineBanner'
+import DropdownMenu from '../components/DropdownMenu'
 
-var username = 'Luis'
+window.navigator.onlinechange = function(evnt,newState) {
+  if (newState === 'offline') {
+    this.isOffline = true;
+  }
+  else {
+    this.isOffline = false;
+  }
+}
 
 export default {
   name: 'MainLayout',
-
   components: {
+    DropdownMenu,
+    OfflineBanner,
     EssentialLink
   },
-
   data () {
     return {
       leftDrawerOpen: false,
-      username,
+      username: null,
+      isOffline: false,
       essentialLinks: [
         {
           title: 'Dashboard',
@@ -107,6 +117,49 @@ export default {
         }
       ]
     }
+  },
+  created () {
+    try {
+      this.username = secureStorage.getItem('name')
+    } catch (e) {
+      secureStorage.clear()
+      this.$router.push({ name: 'login' })
+    }
+  },
+  methods: {
+    displayUserMenu: function() {
+      let dropMenu = document.getElementById('drop-menu');
+
+      if (dropMenu.classList.contains("hidden")) {
+        dropMenu.classList.remove("hidden")
+      }
+      else {
+        dropMenu.classList.add("hidden")
+      }
+    }
   }
 }
 </script>
+
+<style>
+  .round-avatar {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  .hidden {
+    opacity: 0;
+  }
+
+  .pointer {
+    cursor:pointer;
+  }
+
+  #drop-menu {
+    position: absolute;
+    right: 0px;
+    top: 20px;
+  }
+</style>
