@@ -40,6 +40,11 @@ export default {
         this.sendLogIn()
       }
     },
+    saveUserData(ans) {
+      secureStorage.setItem('token', ans.token)
+      secureStorage.setItem('name', ans.user.name)
+      secureStorage.setItem('_id', ans.user._id)
+    },
     checkForm () {
       let type = null
       this.errors = []
@@ -62,8 +67,7 @@ export default {
     },
     saveToken (ans) {
       if (ans.token) {
-        secureStorage.setItem('token', ans.token)
-        secureStorage.setItem('name', ans.user.name)
+        this.saveUserData(ans)
         this.$router.push({ name: 'dashboard' })
       }
       else {

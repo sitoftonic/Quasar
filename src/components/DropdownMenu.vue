@@ -1,7 +1,7 @@
 <template>
   <div style="display: flex; align-items: center">
     <img src="../assets/img/avatar.png" alt="Mi foto de perfil" class="round-avatar">
-    <q-btn-dropdown color="primary" :label="username">
+    <q-btn-dropdown :flat="flat" :label="username">
       <q-list>
         <q-item clickable v-close-popup @click="onSettingsClick">
           <q-item-section>
@@ -25,15 +25,21 @@
 
 <script>
   import secureStorage from '../configs/secureStorage'
+  import axios from 'axios'
+  import config from '../configs/config'
 
   export default {
     name: 'DropdownMenu',
     data: function() {
       return {
-        username: secureStorage.getItem('name')
+        username: secureStorage.getItem('name'),
+        flat: true
       }
     },
     methods: {
+      sendLogout: function(id) {
+
+      },
       onSettingsClick: function() {
         console.log("Yeah")
       },
@@ -41,8 +47,13 @@
 
       },
       onLogoutClick: function() {
-        secureStorage.clear()
-        this.$router.push({ name: 'login' })
+        const _id = secureStorage.getItem('_id')
+        axios
+          .post(config.apiPath + 'logout', { _id: _id, message: 'Logged Out at ' + Date.now() })
+          .then(ans => {
+            secureStorage.clear()
+            this.$router.push({ name: 'login' })
+        })
       }
     }
   }
@@ -55,17 +66,14 @@
 </script>
 
 <style scoped>
-  .q-btn__wrapper:before {
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
+  .round-avatar {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    margin-right: -5px;
   }
 
   .q-btn {
     text-transform: none;
-  }
-
-  .round-avatar {
-    border-radius: 50%;
   }
 </style>

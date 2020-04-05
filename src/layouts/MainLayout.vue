@@ -41,6 +41,9 @@
     <q-page-container>
       <OfflineBanner v-if="isOffline"></OfflineBanner>
       <router-view />
+      <div>
+        <Chat></Chat>
+      </div>
     </q-page-container>
   </q-layout>
 </template>
@@ -50,19 +53,13 @@ import EssentialLink from 'components/SidebarMenuLinks'
 import secureStorage from '../configs/secureStorage'
 import OfflineBanner from '../components/OfflineBanner'
 import DropdownMenu from '../components/DropdownMenu'
+import Chat from '../components/Chat'
 
-window.navigator.onlinechange = function(evnt,newState) {
-  if (newState === 'offline') {
-    this.isOffline = true;
-  }
-  else {
-    this.isOffline = false;
-  }
-}
 
 export default {
   name: 'MainLayout',
   components: {
+    Chat,
     DropdownMenu,
     OfflineBanner,
     EssentialLink
@@ -126,40 +123,10 @@ export default {
       this.$router.push({ name: 'login' })
     }
   },
-  methods: {
-    displayUserMenu: function() {
-      let dropMenu = document.getElementById('drop-menu');
-
-      if (dropMenu.classList.contains("hidden")) {
-        dropMenu.classList.remove("hidden")
-      }
-      else {
-        dropMenu.classList.add("hidden")
-      }
-    }
-  }
+  methods: {}
 }
 </script>
 
 <style>
-  .round-avatar {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-  }
 
-  .hidden {
-    opacity: 0;
-  }
-
-  .pointer {
-    cursor:pointer;
-  }
-
-  #drop-menu {
-    position: absolute;
-    right: 0px;
-    top: 20px;
-  }
 </style>
