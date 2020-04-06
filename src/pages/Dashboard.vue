@@ -17,9 +17,7 @@ export default {
     }
   },
   mounted () {
-    axios
-      .get('https://pokeapi.co/api/v2/pokemon/ditto')
-      .then(res => (this.text = res))
+
   }
 }
 </script>

@@ -1,20 +1,28 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout>
     <q-header elevated>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-        />
-
-        <q-toolbar-title>
-          Influentia
-        </q-toolbar-title>
-        <DropdownMenu></DropdownMenu>
+        <div style="display: flex; justify-content: space-between !important;">
+          <div style="display: flex; flex-direction: row; align-items: center">
+            <q-btn
+              flat
+              dense
+              round
+              icon="menu"
+              aria-label="Menu"
+              @click="leftDrawerOpen = !leftDrawerOpen"
+            />
+            <q-toolbar-title>
+              Influentia
+            </q-toolbar-title>
+            <q-input style="margin-top: 5px; margin-bottom: -10px" outlined bottom-slots v-model="searchText" maxlength="400" v-on:keyup="keyPressed">
+              <template v-slot:after>
+                <q-btn round dense flat icon="search" @click="onSearch" />
+              </template>
+            </q-input>
+          </div>
+          <DropdownMenu></DropdownMenu>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -68,6 +76,7 @@ export default {
     return {
       leftDrawerOpen: false,
       username: null,
+      searchText: '',
       isOffline: false,
       essentialLinks: [
         {
@@ -115,6 +124,17 @@ export default {
       ]
     }
   },
+  methods: {
+    onSearch() {
+
+    },
+    keyPressed(e) {
+      // If enter is pressed
+      if (e.keyCode === 13) {
+        this.sendMessage()
+      }
+    },
+  },
   created () {
     try {
       this.username = secureStorage.getItem('name')
@@ -123,7 +143,6 @@ export default {
       this.$router.push({ name: 'login' })
     }
   },
-  methods: {}
 }
 </script>
 
