@@ -84,6 +84,32 @@ module.exports = function (ctx) {
           }
         })
         */
+        /*
+        cfg.module.rules.push({
+          test: /\.s(c|a)ss$/,
+          use: [
+            'vue-style-loader',
+            'css-loader',
+            {
+              loader: 'sass-loader',
+              // Requires sass-loader@^7.0.0
+              options: {
+                implementation: require('sass'),
+                fiber: require('fibers'),
+                indentedSyntax: true // optional
+              },
+              // Requires sass-loader@^8.0.0
+              options: {
+                implementation: require('sass'),
+                sassOptions: {
+                  fiber: require('fibers'),
+                  indentedSyntax: true // optional
+                },
+              },
+            },
+          ],
+        })
+         */
       }
     },
 
@@ -91,7 +117,7 @@ module.exports = function (ctx) {
     devServer: {
       https: false,
       port: 8080,
-      open: true // opens browser window automatically
+      open: false // opens browser window automatically
     },
 
     // animations: 'all', // --- includes all animations

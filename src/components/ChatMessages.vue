@@ -43,6 +43,7 @@
   import secureStorage from '../configs/secureStorage'
   import axios from 'axios'
 
+
   export default {
     name: 'ChatMessages',
     props: ['usr'],
@@ -106,6 +107,7 @@
           text: [this.text]
         }
         this.$socket.emit('newMessage', message)
+        //this.$socket.emit('newMessage', message)
         this.messages.push(message)
         this.text = ''
         this.scrollDown()

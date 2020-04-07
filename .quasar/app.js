@@ -22,9 +22,12 @@ import createStore from 'app/src/store/index'
 import createRouter from 'app/src/router/index'
 
 
-import socketio from 'socket.io';
+import socketio from 'socket.io-client';
 import VueSocketIO from 'vue-socket.io';
+
 import config from '../src/configs/config'
+
+
 
 export default async function () {
   // create store and router instances
@@ -40,9 +43,15 @@ export default async function () {
   // make router instance available in store
   store.$router = router
 
-  const SocketInstance = socketio(config.apiPath);
-
-  Vue.use(VueSocketIO, SocketInstance)
+  Vue.use(new VueSocketIO({
+    debug: true,
+    connection: config.apiPath,
+    vuex: {
+      store,
+      actionPrefix: 'SOCKET_',
+      mutationPrefix: 'SOCKET_'
+    },
+  }))
 
   // Create the app instantiation Object.
   // Here we inject the router, store to all child components,
