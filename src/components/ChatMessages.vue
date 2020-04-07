@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <q-scroll-area
       :visible="true"
-      style="height: 450px; max-width: 350px"
+      id="chat-scroll"
     >
       <q-infinite-scroll reverse>
         <template>
@@ -143,5 +143,14 @@
 </script>
 
 <style scoped>
+  #chat-scroll {
+    height: 450px;
+    max-width: 350px
+  }
 
+  @media (max-width: 500px) {
+    #chat-scroll {
+      height: 350px;
+    }
+  }
 </style>
