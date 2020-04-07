@@ -22,23 +22,27 @@ import createStore from 'app/src/store/index'
 import createRouter from 'app/src/router/index'
 
 
-
-
+import socketio from 'socket.io';
+import VueSocketIO from 'vue-socket.io';
+import config from '../src/configs/config'
 
 export default async function () {
   // create store and router instances
-  
+
   const store = typeof createStore === 'function'
     ? await createStore({Vue})
     : createStore
-  
+
   const router = typeof createRouter === 'function'
     ? await createRouter({Vue, store})
     : createRouter
-  
+
   // make router instance available in store
   store.$router = router
-  
+
+  const SocketInstance = socketio(config.apiPath);
+
+  Vue.use(VueSocketIO, SocketInstance)
 
   // Create the app instantiation Object.
   // Here we inject the router, store to all child components,
@@ -50,7 +54,7 @@ export default async function () {
     render: h => h(App)
   }
 
-  
+
 
   // expose the app, the router and the store.
   // note we are not mounting the app here, since bootstrapping will be
