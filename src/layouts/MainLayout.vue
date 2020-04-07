@@ -1,32 +1,55 @@
 <template>
   <q-layout>
-    <q-header elevated>
-      <q-toolbar>
-        <div style="display: flex; justify-content: space-between !important;">
-          <div style="display: flex; flex-direction: row; align-items: center">
-            <q-btn
-              flat
-              dense
-              round
-              icon="menu"
-              aria-label="Menu"
-              @click="leftDrawerOpen = !leftDrawerOpen"
-            />
-            <q-toolbar-title>
-              Influentia
-            </q-toolbar-title>
-            <q-input style="margin-top: 5px; margin-bottom: -10px" outlined bottom-slots v-model="searchText" maxlength="400" v-on:keyup="keyPressed">
-              <template v-slot:after>
-                <q-btn round dense flat icon="search" @click="onSearch" />
-              </template>
-            </q-input>
-          </div>
+    <q-header elevated style="padding: 20px">
+      <div style="display: flex; justify-content: space-between !important;">
+        <div style="display: flex; flex-direction: row; align-items: center">
+          <q-btn
+            flat
+            dense
+            round
+            icon="menu"
+            aria-label="Menu"
+            @click="leftDrawerOpen = !leftDrawerOpen"
+          />
+          <q-toolbar-title>
+            Influentia
+          </q-toolbar-title>
+        </div>
+        <div style="display: flex; flex-direction: row;">
+          <q-btn
+            flat
+            dense
+            round
+            icon="search"
+            class="header-icon"
+            aria-label="Búsqueda"
+            @click=""
+          />
+          <q-btn
+            flat
+            dense
+            round
+            icon="chat"
+            class="header-icon"
+            aria-label="Chat"
+            @click="handleRightDrawer('chat')"
+          />
+          <q-btn
+            flat
+            dense
+            round
+            icon="feedback"
+            class="header-icon"
+            aria-label="Notificaciones"
+            @click="handleRightDrawer('notifications')"
+          />
           <DropdownMenu></DropdownMenu>
         </div>
-      </q-toolbar>
+      </div>
     </q-header>
 
     <q-drawer
+      side="left"
       v-model="leftDrawerOpen"
       show-if-above
       bordered
@@ -46,12 +69,31 @@
         />
       </q-list>
     </q-drawer>
+    <q-drawer
+      side="right"
+      v-model="chatDrawerOpen"
+      show-if-above
+      bordered
+      :width="300"
+      :breakpoint="500"
+      content-class="bg-grey-1"
+    >
+      <Chat></Chat>
+    </q-drawer>
+    <q-drawer
+      side="right"
+      v-model="notificationsDrawerOpen"
+      show-if-above
+      bordered
+      :width="300"
+      :breakpoint="500"
+      content-class="bg-grey-1"
+    >
+      <p>Hola Notifications</p>
+    </q-drawer>
     <q-page-container>
       <OfflineBanner v-if="isOffline"></OfflineBanner>
       <router-view />
-      <div>
-        <Chat></Chat>
-      </div>
     </q-page-container>
   </q-layout>
 </template>
@@ -75,6 +117,8 @@ export default {
   data () {
     return {
       leftDrawerOpen: false,
+      chatDrawerOpen: false,
+      notificationsDrawerOpen: false,
       username: null,
       searchText: '',
       isOffline: false,
@@ -125,6 +169,20 @@ export default {
     }
   },
   methods: {
+    handleRightDrawer(type) {
+      if (type === 'chat') {
+        if (this.notificationsDrawerOpen) {
+          this.notificationsDrawerOpen = !this.notificationsDrawerOpen
+        }
+        this.chatDrawerOpen = !this.chatDrawerOpen
+      }
+      else {
+        if (this.chatDrawerOpen) {
+          this.chatDrawerOpen = !this.chatDrawerOpen
+        }
+        this.notificationsDrawerOpen = !this.notificationsDrawerOpen
+      }
+    },
     onSearch() {
 
     },
@@ -147,5 +205,7 @@ export default {
 </script>
 
 <style>
-
+  .header-icon {
+    margin-right: 20px;
+  }
 </style>

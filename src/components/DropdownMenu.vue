@@ -1,25 +1,27 @@
 <template>
   <div style="display: flex; align-items: center">
     <img src="../assets/img/avatar.png" alt="Mi foto de perfil" class="round-avatar">
-    <q-btn-dropdown :flat="flat" :label="username">
-      <q-list>
-        <q-item clickable v-close-popup @click="onSettingsClick">
-          <q-item-section>
-            <q-item-label>Ajustes</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable v-close-popup @click="onHelpClick">
-          <q-item-section>
-            <q-item-label>Ayuda</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable v-close-popup @click="onLogoutClick">
-          <q-item-section>
-            <q-item-label>Cerrar sesión</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-btn-dropdown>
+    <q-btn :flat="flat" :label="username">
+      <q-menu fit>
+        <q-list>
+          <q-item clickable v-close-popup @click="onSettingsClick">
+            <q-item-section>
+              <q-item-label>Ajustes</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup @click="onHelpClick">
+            <q-item-section>
+              <q-item-label>Ayuda</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup @click="onLogoutClick">
+            <q-item-section>
+              <q-item-label>Cerrar sesión</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-menu>
+    </q-btn>
   </div>
 </template>
 
