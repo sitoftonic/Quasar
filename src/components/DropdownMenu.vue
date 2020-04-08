@@ -1,8 +1,11 @@
 <template>
-  <div style="display: flex; align-items: center">
-    <img src="../assets/img/avatar.png" alt="Mi foto de perfil" class="round-avatar">
-    <q-btn :flat="flat" :label="username">
-      <q-menu fit>
+  <div class="dropdown-menu">
+    <q-btn :flat="flat">
+      <div style="display: flex; flex-direction: row; align-items: center">
+        <img src="../assets/img/avatar.png" alt="Mi foto de perfil" class="round-avatar">
+        <p class="username" style="margin: 0; margin-left: 10px">{{username}}</p>
+      </div>
+      <q-menu>
         <q-list>
           <q-item clickable v-close-popup @click="onSettingsClick">
             <q-item-section>
@@ -77,5 +80,16 @@
 
   .q-btn {
     text-transform: none;
+  }
+
+  .dropdown-menu {
+    display: flex;
+    align-items: center
+  }
+
+  @media (max-width: 450px) {
+    .username {
+      display: none;
+    }
   }
 </style>

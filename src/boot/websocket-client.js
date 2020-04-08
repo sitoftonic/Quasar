@@ -2,7 +2,6 @@ import Vue from 'vue';
 import SocketIO from 'socket.io-client';
 import VueSocketIO from 'vue-socket.io';
 import config from '../configs/config'
-import { i18n } from 'boot/i18n'
 
 
 export default ({ app }) => {

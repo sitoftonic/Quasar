@@ -72,24 +72,25 @@
     <q-drawer
       side="right"
       v-model="chatDrawerOpen"
-      show-if-above
       bordered
       :width="300"
       :breakpoint="500"
       content-class="bg-grey-1"
     >
-      <Chat></Chat>
+      <div id="chat-container">
+        <Chat></Chat>
+      </div>
     </q-drawer>
     <q-drawer
       side="right"
       v-model="notificationsDrawerOpen"
-      show-if-above
       bordered
       :width="300"
       :breakpoint="500"
       content-class="bg-grey-1"
     >
       <p>Hola Notifications</p>
+      {{ this.notificationsDrawerOpen }}
     </q-drawer>
     <q-page-container>
       <OfflineBanner v-if="isOffline"></OfflineBanner>
@@ -131,9 +132,9 @@ export default {
         },
         {
           title: 'Buscador',
-          caption: 'Nuevas campañas',
+          caption: 'Encuentra influencers',
           icon: 'search',
-          link: '/search/campaigns'
+          link: '/search'
         },
         {
           title: 'Mis campañas',
@@ -176,11 +177,14 @@ export default {
         }
         this.chatDrawerOpen = !this.chatDrawerOpen
       }
-      else {
+      else if (type === 'notifications') {
         if (this.chatDrawerOpen) {
           this.chatDrawerOpen = !this.chatDrawerOpen
         }
         this.notificationsDrawerOpen = !this.notificationsDrawerOpen
+      }
+      else {
+        // Other cases
       }
     },
     onSearch() {
@@ -207,5 +211,17 @@ export default {
 <style>
   .header-icon {
     margin-right: 20px;
+  }
+
+  #chat-container {
+    display: flex;
+    flex-direction: column-reverse;
+    height: 100%;
+  }
+
+  @media (max-width: 450px) {
+    .header-icon {
+      margin-right: 5px;
+    }
   }
 </style>

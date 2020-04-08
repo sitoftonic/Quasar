@@ -23,6 +23,7 @@
 import axios from 'axios'
 import config from '../configs/config'
 import secureStorage from '../configs/secureStorage'
+import iziToast from 'izitoast'
 
 export default {
   name: 'LoginPage',
@@ -69,6 +70,10 @@ export default {
       if (ans.token) {
         this.saveUserData(ans)
         this.$router.push({ name: 'dashboard' })
+        iziToast.show({
+          title: 'Bien!',
+          message: 'Has iniciado sesión con éxito'
+        })
       }
       else {
         secureStorage.removeItem('token')

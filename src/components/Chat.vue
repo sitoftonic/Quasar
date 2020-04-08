@@ -1,64 +1,60 @@
 <template>
   <!-- v-click-outside="hideChat"  EN CHAT-BUTTON-->
-  <div>
-    <div id="chat-button" @click="changeChatState">
-      <q-icon v-if="!chatIsOpen" name="chat" style="font-size: 40px; color: white"></q-icon>
-      <q-icon v-if="chatIsOpen" name="close" style="font-size: 50px; color: white"></q-icon>
+  <div id="chat-window">
+    <div v-if="this.chatWindow === 'search'" class="q-ma-md">
+      <div style="display: flex; flex-direction: row; align-items: center; max-height: 50px">
+        <q-icon name="keyboard_backspace" style="font-size: 20px; margin-right: 10px; cursor: pointer" @click="changeChatWindow('main')"></q-icon>
+        <h5>Gente en línea</h5>
+      </div>
+      <p>¿Con quién quieres hablar hoy?</p>
+      <q-scroll-area
+        :visible="true"
+        style="height: 500px; width: 100%;"
+      >
+        <div v-for="user in onlineUsers" class="q-py-xs">
+          <q-list bordered separator>
+            <q-slide-item>
+              <q-item clickable v-ripple @click="changeToChatMessages(user)">
+                <q-item-section avatar>
+                  <q-avatar>
+                    <img src="https://cdn.quasar.dev/img/avatar6.jpg" draggable="false">
+                  </q-avatar>
+                </q-item-section>
+                <q-item-section>{{user.name}}</q-item-section>
+              </q-item>
+            </q-slide-item>
+          </q-list>
+        </div>
+      </q-scroll-area>
     </div>
-    <div v-if="chatIsOpen" v-close-popup id="chat-window">
-      <div v-if="this.chatWindow === 'search'" class="q-ma-md">
-        <div style="display: flex; flex-direction: row; align-items: center; max-height: 50px">
-          <q-icon name="keyboard_backspace" style="font-size: 20px; margin-right: 10px; cursor: pointer" @click="changeChatWindow('main')"></q-icon>
-          <h5>Gente en línea</h5>
-        </div>
-        <p>¿Con quién quieres hablar hoy?</p>
-        <q-scroll-area
-          :visible="true"
-          style="height: 500px; max-width: 350px;"
-        >
-          <div v-for="user in onlineUsers" class="q-py-xs">
-            <q-list bordered separator>
-              <q-slide-item>
-                <q-item clickable v-ripple @click="changeToChatMessages(user)">
-                  <q-item-section avatar>
-                    <q-avatar>
-                      <img src="https://cdn.quasar.dev/img/avatar6.jpg" draggable="false">
-                    </q-avatar>
-                  </q-item-section>
-                  <q-item-section>{{user.name}}</q-item-section>
-                </q-item>
-              </q-slide-item>
-            </q-list>
-          </div>
-        </q-scroll-area>
+    <div v-if="this.chatWindow === 'main'" class="q-ma-md">
+      <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; max-height: 50px">
+        <h5>Mis chats</h5>
+        <q-btn color="primary" label="Buscar gente" @click="changeChatWindow('search')" />
       </div>
-      <div v-if="this.chatWindow === 'main'" class="q-ma-md">
-        <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; max-height: 50px">
-          <h5>Mis chats</h5>
-          <q-btn color="primary" label="Buscar gente" @click="changeChatWindow('search')" />
+      <q-scroll-area
+        :visible="true"
+        style="height: 500px; width: 100%;"
+      >
+        <div v-for="user in onlineUsers" class="q-py-xs">
+          <q-list bordered separator>
+            <q-slide-item>
+              <q-item clickable v-ripple @click="changeToChatMessages(user)">
+                <q-item-section avatar>
+                  <q-avatar>
+                    <img src="https://cdn.quasar.dev/img/avatar6.jpg" draggable="false">
+                  </q-avatar>
+                </q-item-section>
+                <q-item-section>{{user.name}}</q-item-section>
+              </q-item>
+            </q-slide-item>
+          </q-list>
         </div>
-        <q-scroll-area
-          :visible="true"
-          style="height: 550px; max-width: 350px;"
-        >
-          <div v-for="user in onlineUsers" class="q-py-xs">
-            <q-list bordered separator>
-              <q-slide-item>
-                <q-item clickable v-ripple @click="changeToChatMessages(user)">
-                  <q-item-section avatar>
-                    <q-avatar>
-                      <img src="https://cdn.quasar.dev/img/avatar6.jpg" draggable="false">
-                    </q-avatar>
-                  </q-item-section>
-                  <q-item-section>{{user.name}}</q-item-section>
-                </q-item>
-              </q-slide-item>
-            </q-list>
-          </div>
-        </q-scroll-area>
-      </div>
-      <div v-if="this.chatWindow === 'messages'" class="q-ma-md">
-        <div style="display: flex; flex-direction: row; align-items: center; max-height: 50px; margin-bottom: -15px">
+      </q-scroll-area>
+    </div>
+    <div v-if="this.chatWindow === 'messages'" class="q-ma-md">
+      <div style="height: 500px; width: 100%;">
+        <div style="display: flex; flex-direction: row; align-items: center; max-height: 50px; margin-bottom: 30px">
           <q-icon name="keyboard_backspace" style="font-size: 20px; margin-right: 10px; cursor: pointer" @click="changeChatWindow('main')"></q-icon>
           <h5>{{this.chattingWith.name}}</h5>
         </div>
@@ -120,37 +116,15 @@
 </script>
 
 <style scoped>
-  #chat-button {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    width: 80px;
-    height: 80px;
-    background-color: var(--q-color-primary);
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   #chat-window {
-    position: fixed;
-    right: 20px;
-    bottom: 105px;
-    height: 70%;
-    width: 350px;
+    //position: fixed;
+    //right: 20px;
+    //bottom: 105px;
+    height: 100%;
+    width: 100%;
     background-color: white;
-    border-style: solid;
-    border-width: 2px;
-    border-color: var(--q-color-primary);
-  }
-
-
-  @media (max-width: 420px) {
-    #chat-window {
-      height: 70%;
-      width: 90%;
-    }
+    //border-style: solid;
+    //border-width: 2px;
+    //border-color: var(--q-color-primary);
   }
 </style>

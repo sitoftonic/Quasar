@@ -14,6 +14,24 @@ const routes = [
         name: 'profile',
         component: () => import('pages/Profile.vue'),
       },
+      {
+        path: 'search',
+        name: 'influencers/search',
+        component: () => import('../pages/InfluencersSearch'),
+      }
+      /*
+      {
+        path: 'influencers',
+        name: 'influencers',
+        children: [
+          {
+            path: 'search',
+            name: 'influencers/search',
+            component: () => import('../pages/InfluencersSearch'),
+          }
+        ]
+      }
+       */
     ]
   },
   {

@@ -10,7 +10,10 @@ module.exports = function (ctx) {
     boot: [
       'i18n',
       'axios',
-      'websocket-client'
+      'websocket-client',
+      'instantsearch',
+      'vue-router',
+      'izitoast'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css

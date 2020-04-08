@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div>
     <q-scroll-area
       :visible="true"
       id="chat-scroll"
@@ -144,8 +144,8 @@
 
 <style scoped>
   #chat-scroll {
-    height: 450px;
-    max-width: 350px
+    height: 550px;
+    width: 100%;
   }
 
   @media (max-width: 500px) {
