@@ -45,7 +45,7 @@ export default function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     try {
       const token = secureStorage.getItem('token')
-      if (to.name !== 'login' && to.name !== 'signup') {
+      if (to.name !== 'login' && to.name !== 'register') {
         if (token) {
           checkTokenValidity(token, next)
         }

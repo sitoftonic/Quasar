@@ -1,6 +1,6 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
-
+const fs = require('fs')
 
 module.exports = function (ctx) {
   return {
@@ -55,7 +55,9 @@ module.exports = function (ctx) {
       directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Loading'
+      ]
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
@@ -119,7 +121,11 @@ module.exports = function (ctx) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
-      https: false,
+      https: {
+        key: fs.readFileSync('./key.pem'),
+        cert: fs.readFileSync('./server.crt'),
+        ca: fs.readFileSync('./csr.pem'),
+      },
       port: 8080,
       open: false // opens browser window automatically
     },
